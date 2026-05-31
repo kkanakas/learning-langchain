@@ -2,9 +2,7 @@ import { BaseChatModel } from '@langchain/core/language_models/chat_models';
 import { initChatModel } from 'langchain/chat_models/universal';
 
 const SUPPORTED_PROVIDERS = [
-  'openai',
   'anthropic',
-  'azure_openai',
   'cohere',
   'google-vertexai',
   'google-vertexai-web',

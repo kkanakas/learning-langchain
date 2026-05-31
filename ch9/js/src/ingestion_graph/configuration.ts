@@ -14,7 +14,7 @@ export const IndexConfigurationAnnotation = Annotation.Root({
   docsPath: Annotation<string>,
 
   /**
-   * Name of the openai embedding model to use. Must be a valid embedding model name.
+   * Name of the HuggingFace embedding model to use. Must be a valid embedding model name.
    */
   embeddingModel: Annotation<'all-MiniLM-L6-v2'>,
 
