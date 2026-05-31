@@ -6,7 +6,7 @@ import {
 } from '@langchain/langgraph';
 import { AgentStateAnnotation } from './state.js';
 import { makeRetriever, makeSupabaseRetriever } from '../shared/retrieval.js';
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 import { formatDocs } from './utils.js';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { pull } from 'langchain/hub';

@@ -1,10 +1,10 @@
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_community.vectorstores import InMemoryVectorStore
-from langchain_openai import OpenAIEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 
 
 # --- Create an index of documents ---
@@ -26,7 +26,7 @@ doc_splits = text_splitter.split_documents(docs_list)
 # Add to vectorDB
 vectorstore = InMemoryVectorStore.from_documents(
     documents=doc_splits,
-    embedding=OpenAIEmbeddings(),
+    embedding=HuggingFaceEmbeddings(),
 )
 retriever = vectorstore.as_retriever()
 
@@ -49,7 +49,7 @@ class GradeDocuments(BaseModel):
 
 
 # LLM with structured output
-llm = ChatOpenAI(temperature=0)
+llm = ChatAnthropic(model="claude-haiku-4-5", temperature=0)
 structured_llm_grader = llm.with_structured_output(GradeDocuments)
 
 # Prompt

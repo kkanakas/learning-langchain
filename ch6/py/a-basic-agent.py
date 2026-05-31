@@ -4,7 +4,7 @@ from typing import Annotated, TypedDict
 from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langgraph.graph import START, StateGraph
 from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
@@ -18,7 +18,7 @@ def calculator(query: str) -> str:
 
 search = DuckDuckGoSearchRun()
 tools = [search, calculator]
-model = ChatOpenAI(temperature=0.1).bind_tools(tools)
+model = ChatAnthropic(model="claude-haiku-4-5", temperature=0.1).bind_tools(tools)
 
 
 class State(TypedDict):

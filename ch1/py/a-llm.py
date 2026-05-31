@@ -1,6 +1,6 @@
-from langchain_openai.chat_models import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 
-model = ChatOpenAI(model="gpt-3.5-turbo")
+model = ChatAnthropic(model="claude-haiku-4-5")
 
 response = model.invoke("The sky is")
 print(response.content)

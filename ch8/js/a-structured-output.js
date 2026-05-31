@@ -1,13 +1,13 @@
 import { z } from "zod";
-import { ChatOpenAI } from "@langchain/openai";
+import { ChatAnthropic } from '@langchain/anthropic';
 
 const joke = z.object({
   setup: z.string().describe("The setup of the joke"),
   punchline: z.string().describe("The punchline to the joke"),
 });
 
-let model = new ChatOpenAI({
-  model: "gpt-3.5-turbo-0125",
+let model = new ChatAnthropic({
+  model: "claude-haiku-4-5",
   temperature: 0,
 });
 

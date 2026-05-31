@@ -1,12 +1,12 @@
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 
 prompt = ChatPromptTemplate.from_messages([
     ("system", "You are a helpful assistant. Answer all questions to the best of         your ability."),
     ("placeholder", "{messages}"),
 ])
 
-model = ChatOpenAI()
+model = ChatAnthropic(model="claude-haiku-4-5")
 
 chain = prompt | model
 

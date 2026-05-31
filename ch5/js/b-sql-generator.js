@@ -1,5 +1,5 @@
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
-import { ChatOpenAI } from "@langchain/openai";
+import { ChatAnthropic } from '@langchain/anthropic';
 import {
   StateGraph,
   Annotation,
@@ -9,9 +9,9 @@ import {
 } from "@langchain/langgraph";
 
 // useful to generate SQL query
-const modelLowTemp = new ChatOpenAI({ temperature: 0.1 });
+const modelLowTemp = new ChatAnthropic({ model: 'claude-haiku-4-5', temperature: 0.1 });
 // useful to generate natural language outputs
-const modelHighTemp = new ChatOpenAI({ temperature: 0.7 });
+const modelHighTemp = new ChatAnthropic({ model: 'claude-haiku-4-5', temperature: 0.7 });
 
 const annotation = Annotation.Root({
   messages: Annotation({ reducer: messagesStateReducer, default: () => [] }),

@@ -4,9 +4,9 @@ from langchain.schema import Document
 from langgraph.graph import END, StateGraph, START
 from langchain_community.vectorstores import InMemoryVectorStore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain import hub
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 
 
 class GraphState(TypedDict):
@@ -54,7 +54,7 @@ def indexing(state):
 # Add to vectorDB
     vectorstore = InMemoryVectorStore.from_documents(
         documents=doc_splits,
-        embedding=OpenAIEmbeddings(),
+        embedding=HuggingFaceEmbeddings(),
     )
     return {"vectorstore": vectorstore}
 
@@ -69,7 +69,7 @@ def retrieve_and_generate(state):
     retriever = vectorstore.as_retriever()
 
     prompt = hub.pull("rlm/rag-prompt")
-    llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+    llm = ChatAnthropic(model="claude-haiku-4-5", temperature=0)
 
     # fetch relevant documents
     docs = retriever.invoke(question)  # format prompt

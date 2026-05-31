@@ -1,7 +1,7 @@
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 import { HumanMessage, SystemMessage } from '@langchain/core/messages';
 
-const model = new ChatOpenAI();
+const model = new ChatAnthropic({ model: 'claude-haiku-4-5' });
 const prompt = [
   new SystemMessage(
     'You are a helpful assistant that responds to questions with three exclamation marks.'

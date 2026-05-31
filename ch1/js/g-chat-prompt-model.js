@@ -1,7 +1,7 @@
 import { ChatPromptTemplate } from '@langchain/core/prompts';
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 
-const model = new ChatOpenAI();
+const model = new ChatAnthropic({ model: 'claude-haiku-4-5' });
 const template = ChatPromptTemplate.fromMessages([
   [
     'system',

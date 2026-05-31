@@ -1,10 +1,10 @@
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
 import { CheerioWebBaseLoader } from '@langchain/community/document_loaders/web/cheerio';
 import { InMemoryVectorStore } from '@langchain/community/vectorstores/in_memory';
-import { OpenAIEmbeddings } from '@langchain/openai';
+import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/huggingface_transformers";
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { z } from 'zod';
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 
 const urls = [
   'https://blog.langchain.dev/top-5-langgraph-agents-in-production-2024/',
@@ -37,7 +37,7 @@ const docSplits = textSplitter.splitDocuments(docsList);
 // Add to vector database
 const vectorstore = await InMemoryVectorStore.fromDocuments(
   docSplits,
-  new OpenAIEmbeddings()
+  new HuggingFaceTransformersEmbeddings({ model: "Xenova/all-MiniLM-L6-v2" })
 );
 
 const retriever = vectorstore.asRetriever(); // The `retriever` object can now be used for querying
@@ -56,7 +56,7 @@ const GradeDocumentsSchema = z.object({
 });
 
 // Initialize LLM with structured output using Zod schema
-const llm = new ChatOpenAI({ model: 'gpt-3.5-turbo', temperature: 0 });
+const llm = new ChatAnthropic({ model: 'claude-haiku-4-5', temperature: 0 });
 const structuredLLMGrader = llm.withStructuredOutput(GradeDocumentsSchema);
 
 // System and prompt template

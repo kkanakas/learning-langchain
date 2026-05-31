@@ -3,7 +3,7 @@ import os
 from langchain_chroma import Chroma
 from langchain_core.embeddings import Embeddings
 from langchain_core.runnables import RunnableConfig
-from langchain_openai import OpenAIEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import SupabaseVectorStore
 from langchain_chroma import Chroma
 from supabase import create_client
@@ -16,9 +16,9 @@ from ingestion_graph.configuration import IndexConfiguration
 def make_text_encoder(model: str) -> Embeddings:
     """Connect to the configured text encoder."""
     provider, model = model.split("/", maxsplit=1)
-    if provider == "openai":
-        from langchain_openai import OpenAIEmbeddings
-        return OpenAIEmbeddings(model=model)
+    if provider == "huggingface":
+        from langchain_huggingface import HuggingFaceEmbeddings
+        return HuggingFaceEmbeddings(model_name=model)
     else:
         raise ValueError(f"Unsupported embedding provider: {provider}")
 

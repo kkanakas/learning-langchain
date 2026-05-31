@@ -1,7 +1,7 @@
-from langchain_openai.chat_models import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langchain_core.messages import HumanMessage
 
-model = ChatOpenAI()
+model = ChatAnthropic(model="claude-haiku-4-5")
 prompt = [HumanMessage("What is the capital of France?")]
 
 response = model.invoke(prompt)

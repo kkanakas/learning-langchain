@@ -1,6 +1,6 @@
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 
-const model = new ChatOpenAI({ model: 'gpt-3.5-turbo' });
+const model = new ChatAnthropic({ model: 'claude-haiku-4-5' });
 
 const response = await model.invoke('The sky is');
 console.log(response);

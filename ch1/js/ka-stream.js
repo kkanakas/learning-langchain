@@ -1,4 +1,4 @@
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { RunnableLambda } from '@langchain/core/runnables';
 
@@ -7,8 +7,8 @@ const template = ChatPromptTemplate.fromMessages([
   ['human', '{question}'],
 ]);
 
-const model = new ChatOpenAI({
-  model: 'gpt-3.5-turbo',
+const model = new ChatAnthropic({
+  model: 'claude-haiku-4-5',
 });
 
 const chatbot = RunnableLambda.from(async function* (values) {

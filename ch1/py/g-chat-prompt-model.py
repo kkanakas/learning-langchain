@@ -1,4 +1,4 @@
-from langchain_openai.chat_models import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langchain_core.prompts import ChatPromptTemplate
 
 # both `template` and `model` can be reused many times
@@ -14,7 +14,7 @@ template = ChatPromptTemplate.from_messages(
     ]
 )
 
-model = ChatOpenAI()
+model = ChatAnthropic(model="claude-haiku-4-5")
 
 # `prompt` and `completion` are the results of using template and model once
 

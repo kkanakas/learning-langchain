@@ -14,7 +14,7 @@ docker run \
 
 import { TextLoader } from 'langchain/document_loaders/fs/text';
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
-import { OpenAIEmbeddings } from '@langchain/openai';
+import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/huggingface_transformers";
 import { PGVectorStore } from '@langchain/community/vectorstores/pgvector';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -30,7 +30,7 @@ const splitter = new RecursiveCharacterTextSplitter({
 const docs = await splitter.splitDocuments(raw_docs);
 
 // embed each chunk and insert it into the vector store
-const model = new OpenAIEmbeddings();
+const model = new HuggingFaceTransformersEmbeddings({ model: "Xenova/all-MiniLM-L6-v2" });
 const db = await PGVectorStore.fromDocuments(docs, model, {
   postgresConnectionOptions: {
     connectionString,

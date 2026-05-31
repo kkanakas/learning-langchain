@@ -1,8 +1,8 @@
 from langchain_community.document_loaders import TextLoader
-from langchain_openai import OpenAIEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_postgres.vectorstores import PGVector
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import chain
 
@@ -16,7 +16,7 @@ text_splitter = RecursiveCharacterTextSplitter(
 documents = text_splitter.split_documents(raw_documents)
 
 # Create embeddings for the documents
-embeddings_model = OpenAIEmbeddings()
+embeddings_model = HuggingFaceEmbeddings()
 
 db = PGVector.from_documents(
     documents, embeddings_model, connection=connection)
@@ -32,7 +32,7 @@ def parse_queries_output(message):
     return message.content.split('\n')
 
 
-llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
+llm = ChatAnthropic(model="claude-haiku-4-5", temperature=0)
 query_gen = prompt_rag_fusion | llm | parse_queries_output
 
 query = "Who are the key figures in the ancient greek history of philosophy?"

@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 
 
 class Joke(BaseModel):
@@ -7,7 +7,7 @@ class Joke(BaseModel):
     punchline: str = Field(description="The punchline to the joke")
 
 
-model = ChatOpenAI(model="gpt-4o", temperature=0)
+model = ChatAnthropic(model="claude-sonnet-4-6", temperature=0)
 model = model.with_structured_output(Joke)
 
 result = model.invoke("Tell me a joke about cats")

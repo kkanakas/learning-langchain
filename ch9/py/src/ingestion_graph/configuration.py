@@ -29,7 +29,7 @@ class IndexConfiguration:
         str,
         {"__template_metadata__": {"kind": "embeddings"}},
     ] = field(
-        default="openai/text-embedding-3-small",
+        default="huggingface/all-MiniLM-L6-v2",
         metadata={
             "description": "Name of the embedding model to use. Must be a valid embedding model name."
         },

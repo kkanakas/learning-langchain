@@ -2,10 +2,10 @@ from typing import Annotated, TypedDict
 
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langchain_core.messages import HumanMessage
 
-model = ChatOpenAI()
+model = ChatAnthropic(model="claude-haiku-4-5")
 
 
 class State(TypedDict):

@@ -3,15 +3,16 @@ from typing import Annotated, Literal, TypedDict
 from langchain_core.documents import Document
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.vectorstores.in_memory import InMemoryVectorStore
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_anthropic import ChatAnthropic
+from langchain_huggingface import HuggingFaceEmbeddings
 from langgraph.graph import END, START, StateGraph
 from langgraph.graph.message import add_messages
 
-embeddings = OpenAIEmbeddings()
+embeddings = HuggingFaceEmbeddings()
 # useful to generate SQL query
-model_low_temp = ChatOpenAI(temperature=0.1)
+model_low_temp = ChatAnthropic(model="claude-haiku-4-5", temperature=0.1)
 # useful to generate natural language outputs
-model_high_temp = ChatOpenAI(temperature=0.7)
+model_high_temp = ChatAnthropic(model="claude-haiku-4-5", temperature=0.7)
 
 
 class State(TypedDict):

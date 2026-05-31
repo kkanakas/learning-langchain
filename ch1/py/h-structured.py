@@ -1,4 +1,4 @@
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from pydantic import BaseModel
 
 
@@ -11,7 +11,7 @@ class AnswerWithJustification(BaseModel):
     """Justification for the answer"""
 
 
-llm = ChatOpenAI(model="gpt-3.5", temperature=0)
+llm = ChatAnthropic(model="claude-haiku-4-5", temperature=0)
 structured_llm = llm.with_structured_output(AnswerWithJustification)
 
 response = structured_llm.invoke(

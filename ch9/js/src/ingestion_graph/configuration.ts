@@ -16,7 +16,7 @@ export const IndexConfigurationAnnotation = Annotation.Root({
   /**
    * Name of the openai embedding model to use. Must be a valid embedding model name.
    */
-  embeddingModel: Annotation<'text-embedding-3-small'>,
+  embeddingModel: Annotation<'all-MiniLM-L6-v2'>,
 
   /**
    * The vector store provider to store the embeddings.
@@ -44,7 +44,7 @@ export function ensureIndexConfiguration(
   >;
   return {
     docsPath: configurable.docsPath || DEFAULT_DOCS_PATH,
-    embeddingModel: configurable.embeddingModel || 'text-embedding-3-small',
+    embeddingModel: configurable.embeddingModel || 'all-MiniLM-L6-v2',
     retrieverProvider: configurable.retrieverProvider || 'supabase',
     useSampleDocs: configurable.useSampleDocs || false,
   };

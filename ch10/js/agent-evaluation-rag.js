@@ -1,4 +1,4 @@
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { evaluate } from 'langsmith/evaluation';
 import { traceable } from 'langsmith/traceable';
@@ -9,7 +9,7 @@ const defaultDataset = 'langchain-blogs-qa';
 
 const experimentPrefix = 'langchain-blogs-qa-evals';
 
-const llm = new ChatOpenAI({ model: 'gpt-4o', temperature: 0 });
+const llm = new ChatAnthropic({ model: 'claude-sonnet-4-6', temperature: 0 });
 
 const EVALUATION_PROMPT = `You are a teacher grading a quiz.
 

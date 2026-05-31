@@ -1,4 +1,4 @@
-from langchain_openai.chat_models import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import chain
 
@@ -11,7 +11,7 @@ template = ChatPromptTemplate.from_messages(
     ]
 )
 
-model = ChatOpenAI(model="gpt-3.5-turbo")
+model = ChatAnthropic(model="claude-haiku-4-5")
 
 # combine them in a function
 # @chain decorator adds the same Runnable interface for any function you write

@@ -14,7 +14,7 @@ docker run \
 
 import { PostgresRecordManager } from '@langchain/community/indexes/postgres';
 import { index } from 'langchain/indexes';
-import { OpenAIEmbeddings } from '@langchain/openai';
+import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/huggingface_transformers";
 import { PGVectorStore } from '@langchain/community/vectorstores/pgvector';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -37,7 +37,7 @@ const config = {
 };
 
 const vectorStore = await PGVectorStore.initialize(
-  new OpenAIEmbeddings(),
+  new HuggingFaceTransformersEmbeddings({ model: "Xenova/all-MiniLM-L6-v2" }),
   config
 );
 

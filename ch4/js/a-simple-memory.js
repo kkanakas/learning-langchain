@@ -1,5 +1,5 @@
 import { ChatPromptTemplate } from '@langchain/core/prompts';
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 
 const prompt = ChatPromptTemplate.fromMessages([
   [
@@ -8,7 +8,7 @@ const prompt = ChatPromptTemplate.fromMessages([
   ],
   ['placeholder', '{messages}'],
 ]);
-const model = new ChatOpenAI();
+const model = new ChatAnthropic({ model: 'claude-haiku-4-5' });
 const chain = prompt.pipe(model);
 
 const response = await chain.invoke({

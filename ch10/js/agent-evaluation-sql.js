@@ -1,4 +1,4 @@
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 import { graph } from './agent-sql-graph.js';
 import crypto from 'crypto';
 import * as hub from 'langchain/hub';
@@ -13,7 +13,7 @@ const config = {
   },
 };
 
-const llm = new ChatOpenAI({ model: 'gpt-4o-mini', temperature: 0 });
+const llm = new ChatAnthropic({ model: 'claude-haiku-4-5', temperature: 0 });
 
 const predictSQLAgentAnswer = traceable(async (example) => {
   const messages = await graph.invoke(

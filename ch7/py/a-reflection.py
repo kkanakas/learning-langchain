@@ -6,12 +6,12 @@ from langchain_core.messages import (
     HumanMessage,
     SystemMessage,
 )
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langgraph.graph import END, START, StateGraph
 from langgraph.graph.message import add_messages
 
 # Initialize chat model
-model = ChatOpenAI()
+model = ChatAnthropic(model="claude-haiku-4-5")
 
 
 # Define state type

@@ -1,4 +1,4 @@
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 import { z } from 'zod';
 
 const answerSchema = z
@@ -10,8 +10,8 @@ const answerSchema = z
     "An answer to the user's question along with justification for the answer."
   );
 
-const model = new ChatOpenAI({
-  model: 'gpt-3.5-turbo',
+const model = new ChatAnthropic({
+  model: 'claude-haiku-4-5',
   temperature: 0,
 }).withStructuredOutput(answerSchema);
 

@@ -7,7 +7,7 @@ from langgraph.graph import END, StateGraph, START
 from retrieve_and_grade import retrieval_grader
 from retrieve_and_grade import retriever
 from langchain_core.output_parsers import StrOutputParser
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain import hub  # Prompt
@@ -15,7 +15,7 @@ from langchain import hub  # Prompt
 prompt = hub.pull("rlm/rag-prompt")
 
 # LLM
-llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+llm = ChatAnthropic(model="claude-haiku-4-5", temperature=0)
 
 rag_chain = prompt | llm | StrOutputParser()
 

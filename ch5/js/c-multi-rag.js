@@ -1,5 +1,6 @@
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
-import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
+import { ChatAnthropic } from "@langchain/anthropic"
+import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/huggingface_transformers";
 import { MemoryVectorStore } from "langchain/vectorstores/memory";
 import {
   StateGraph,
@@ -9,11 +10,11 @@ import {
   END,
 } from "@langchain/langgraph";
 
-const embeddings = new OpenAIEmbeddings();
+const embeddings = new HuggingFaceTransformersEmbeddings({ model: "Xenova/all-MiniLM-L6-v2" });
 // useful to generate SQL query
-const modelLowTemp = new ChatOpenAI({ temperature: 0.1 });
+const modelLowTemp = new ChatAnthropic({ model: 'claude-haiku-4-5', temperature: 0.1 });
 // useful to generate natural language outputs
-const modelHighTemp = new ChatOpenAI({ temperature: 0.7 });
+const modelHighTemp = new ChatAnthropic({ model: 'claude-haiku-4-5', temperature: 0.7 });
 
 const annotation = Annotation.Root({
   messages: Annotation({ reducer: messagesStateReducer, default: () => [] }),

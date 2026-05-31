@@ -1,6 +1,6 @@
-from langchain_openai import OpenAIEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 
-model = OpenAIEmbeddings(model="text-embedding-3-small")
+model = HuggingFaceEmbeddings()
 embeddings = model.embed_documents([
     "Hi there!",
     "Oh, hello!",

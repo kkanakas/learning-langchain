@@ -8,12 +8,12 @@ import {
   START,
 } from "@langchain/langgraph";
 import { ToolNode, toolsCondition } from "@langchain/langgraph/prebuilt";
-import { ChatOpenAI } from "@langchain/openai";
+import { ChatAnthropic } from '@langchain/anthropic';
 
 const search = new DuckDuckGoSearch();
 const calculator = new Calculator();
 const tools = [search, calculator];
-const model = new ChatOpenAI({ temperature: 0.1 }).bindTools(tools);
+const model = new ChatAnthropic({ model: 'claude-haiku-4-5', temperature: 0.1 }).bindTools(tools);
 
 const annotation = Annotation.Root({
   messages: Annotation({ reducer: messagesStateReducer, default: () => [] }),

@@ -1,10 +1,10 @@
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 import { SelfQueryRetriever } from 'langchain/retrievers/self_query';
 import { FunctionalTranslator } from '@langchain/core/structured_query';
 import { MemoryVectorStore } from 'langchain/vectorstores/memory';
 import { Document } from 'langchain/document';
 import { AttributeInfo } from 'langchain/chains/query_constructor';
-import { OpenAIEmbeddings } from '@langchain/openai';
+import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/huggingface_transformers";
 /**
  * First, we create a bunch of documents. You can load your own documents here instead.
  * Each document has a pageContent and a metadata field. Make sure your metadata matches the AttributeInfo below.
@@ -60,9 +60,9 @@ const docs = [
   }),
 ];
 
-const llm = new ChatOpenAI({ modelName: 'gpt-3.5-turbo', temperature: 0 });
+const llm = new ChatAnthropic({ model: 'claude-haiku-4-5', temperature: 0 });
 
-const embeddings = new OpenAIEmbeddings();
+const embeddings = new HuggingFaceTransformersEmbeddings({ model: "Xenova/all-MiniLM-L6-v2" });
 
 const vectorStore = await MemoryVectorStore.fromDocuments(docs, embeddings);
 

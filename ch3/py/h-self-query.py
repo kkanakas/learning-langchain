@@ -2,9 +2,9 @@
 
 from langchain.chains.query_constructor.base import AttributeInfo
 from langchain.retrievers.self_query.base import SelfQueryRetriever
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langchain_community.document_loaders import TextLoader
-from langchain_openai import OpenAIEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_postgres.vectorstores import PGVector
 from langchain_core.documents import Document
@@ -45,7 +45,7 @@ docs = [
 ]
 
 # Create embeddings for the documents
-embeddings_model = OpenAIEmbeddings()
+embeddings_model = HuggingFaceEmbeddings()
 
 vectorstore = PGVector.from_documents(
     docs, embeddings_model, connection=connection)
@@ -75,7 +75,7 @@ fields = [
 ]
 
 description = "Brief summary of a movie"
-llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
+llm = ChatAnthropic(model="claude-haiku-4-5", temperature=0)
 retriever = SelfQueryRetriever.from_llm(llm, vectorstore, description, fields)
 
 # This example only specifies a filter

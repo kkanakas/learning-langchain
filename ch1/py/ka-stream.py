@@ -1,9 +1,9 @@
 from langchain_core.runnables import chain
-from langchain_openai.chat_models import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langchain_core.prompts import ChatPromptTemplate
 
 
-model = ChatOpenAI(model="gpt-3.5-turbo")
+model = ChatAnthropic(model="claude-haiku-4-5")
 
 
 template = ChatPromptTemplate.from_messages(

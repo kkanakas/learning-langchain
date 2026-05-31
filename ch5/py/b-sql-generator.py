@@ -1,14 +1,14 @@
 from typing import Annotated, TypedDict
 
 from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langgraph.graph import END, START, StateGraph
 from langgraph.graph.message import add_messages
 
 # useful to generate SQL query
-model_low_temp = ChatOpenAI(temperature=0.1)
+model_low_temp = ChatAnthropic(model="claude-haiku-4-5", temperature=0.1)
 # useful to generate natural language outputs
-model_high_temp = ChatOpenAI(temperature=0.7)
+model_high_temp = ChatAnthropic(model="claude-haiku-4-5", temperature=0.7)
 
 
 class State(TypedDict):

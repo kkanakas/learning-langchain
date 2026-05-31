@@ -1,7 +1,7 @@
 import { Annotation, StateGraph, START, END } from '@langchain/langgraph';
 import { StringOutputParser } from '@langchain/core/output_parsers';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 import { DuckDuckGoSearch } from '@langchain/community/tools/duckduckgo_search';
 import * as hub from 'langchain/hub';
 import { retriever, retrievalGrader } from './retrieve-and-grade.js';
@@ -9,7 +9,7 @@ import { Document } from '@langchain/core/documents';
 
 // LLM setup
 const prompt = await hub.pull('rlm/rag-prompt');
-const llm = new ChatOpenAI({ modelName: 'gpt-4', temperature: 0 }); // Fixed model name
+const llm = new ChatAnthropic({ model: 'claude-opus-4-8', temperature: 0 }); // Fixed model name
 const ragChain = prompt.pipe(llm).pipe(new StringOutputParser());
 const webSearchTool = new DuckDuckGoSearch();
 // Question rewriting prompt

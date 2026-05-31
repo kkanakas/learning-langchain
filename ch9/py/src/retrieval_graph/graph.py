@@ -2,7 +2,7 @@ from typing import Literal
 from langchain.hub import pull
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import HumanMessage
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langgraph.graph import END, START, StateGraph
 from pydantic import BaseModel
 

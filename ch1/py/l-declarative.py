@@ -1,4 +1,4 @@
-from langchain_openai.chat_models import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langchain_core.prompts import ChatPromptTemplate
 
 # the building blocks
@@ -10,7 +10,7 @@ template = ChatPromptTemplate.from_messages(
     ]
 )
 
-model = ChatOpenAI()
+model = ChatAnthropic(model="claude-haiku-4-5")
 
 # combine them with the | operator
 

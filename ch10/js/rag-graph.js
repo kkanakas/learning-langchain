@@ -2,7 +2,8 @@ import { Annotation, StateGraph } from '@langchain/langgraph';
 import { CheerioWebBaseLoader } from '@langchain/community/document_loaders/web/cheerio';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { MemoryVectorStore } from 'langchain/vectorstores/memory';
-import { ChatOpenAI, OpenAIEmbeddings } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic'
+import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/huggingface_transformers";
 import * as hub from 'langchain/hub';
 import { StringOutputParser } from '@langchain/core/output_parsers';
 
@@ -43,7 +44,7 @@ const indexing = async (state) => {
 
   const docSplits = await textSplitter.splitDocuments(state.scrapedDocuments);
 
-  const vectorstore = new MemoryVectorStore(new OpenAIEmbeddings());
+  const vectorstore = new MemoryVectorStore(new HuggingFaceTransformersEmbeddings({ model: "Xenova/all-MiniLM-L6-v2" }));
 
   await vectorstore.addDocuments(docSplits);
 
@@ -59,7 +60,7 @@ const retrieveAndGenerate = async (state) => {
 
   const prompt = await hub.pull('rlm/rag-prompt');
 
-  const llm = new ChatOpenAI({ model: 'gpt-3.5-turbo', temperature: 0 });
+  const llm = new ChatAnthropic({ model: 'claude-haiku-4-5', temperature: 0 });
 
   const docs = await retriever.invoke(question);
 

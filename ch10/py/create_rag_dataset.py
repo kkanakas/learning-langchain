@@ -1,9 +1,7 @@
-from langsmith import wrappers, Client
+from langsmith import Client
 from pydantic import BaseModel, Field
-from openai import OpenAI
 
 client = Client()
-openai_client = wrappers.wrap_openai(OpenAI())
 
 examples = [
     {

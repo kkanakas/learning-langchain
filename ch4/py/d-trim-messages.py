@@ -4,7 +4,7 @@ from langchain_core.messages import (
     AIMessage,
     trim_messages,
 )
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 
 # Define sample messages
 messages = [
@@ -25,7 +25,7 @@ messages = [
 trimmer = trim_messages(
     max_tokens=65,
     strategy="last",
-    token_counter=ChatOpenAI(model="gpt-4o"),
+    token_counter=ChatAnthropic(model="claude-sonnet-4-6"),
     include_system=True,
     allow_partial=False,
     start_on="human",

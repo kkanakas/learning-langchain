@@ -31,6 +31,6 @@ export function ensureAgentConfiguration(
   const baseConfig = ensureBaseConfiguration(config);
   return {
     ...baseConfig,
-    queryModel: configurable.queryModel || 'openai/gpt-4o',
+    queryModel: configurable.queryModel || 'anthropic/claude-sonnet-4-6',
   };
 }

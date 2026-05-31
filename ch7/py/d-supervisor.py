@@ -1,6 +1,6 @@
 from typing import Literal
 
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langgraph.graph import StateGraph, MessagesState, START
 from pydantic import BaseModel
 
@@ -10,7 +10,7 @@ class SupervisorDecision(BaseModel):
 
 
 # Initialize model
-model = ChatOpenAI(model="gpt-4", temperature=0)
+model = ChatAnthropic(model="claude-opus-4-8", temperature=0)
 model = model.with_structured_output(SupervisorDecision)
 
 # Define available agents

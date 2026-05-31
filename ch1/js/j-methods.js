@@ -1,6 +1,6 @@
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 
-const model = new ChatOpenAI();
+const model = new ChatAnthropic({ model: 'claude-haiku-4-5' });
 
 const response = await model.invoke('Hi there!');
 console.log(response);

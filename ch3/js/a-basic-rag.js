@@ -14,10 +14,10 @@ docker run \
 
 import { TextLoader } from 'langchain/document_loaders/fs/text';
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
-import { OpenAIEmbeddings } from '@langchain/openai';
+import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/huggingface_transformers";
 import { PGVectorStore } from '@langchain/community/vectorstores/pgvector';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 import { RunnableLambda } from '@langchain/core/runnables';
 const connectionString =
   'postgresql://langchain:langchain@localhost:6024/langchain';
@@ -31,7 +31,7 @@ const splitter = new RecursiveCharacterTextSplitter({
 const splitDocs = await splitter.splitDocuments(raw_docs);
 
 // embed each chunk and insert it into the vector store
-const model = new OpenAIEmbeddings();
+const model = new HuggingFaceTransformersEmbeddings({ model: "Xenova/all-MiniLM-L6-v2" });
 
 const db = await PGVectorStore.fromDocuments(splitDocs, model, {
   postgresConnectionOptions: {
@@ -59,7 +59,7 @@ const prompt = ChatPromptTemplate.fromTemplate(
   'Answer the question based only on the following context:\n {context}\n\nQuestion: {question}'
 );
 
-const llm = new ChatOpenAI({ temperature: 0, modelName: 'gpt-3.5-turbo' });
+const llm = new ChatAnthropic({ temperature: 0, model: 'claude-haiku-4-5' });
 const chain = prompt.pipe(llm);
 
 const result = await chain.invoke({

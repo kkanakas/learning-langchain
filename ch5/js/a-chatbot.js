@@ -6,10 +6,10 @@ import {
   END,
 } from '@langchain/langgraph';
 
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 import { HumanMessage } from '@langchain/core/messages';
 
-const model = new ChatOpenAI();
+const model = new ChatAnthropic({ model: 'claude-haiku-4-5' });
 
 const State = {
   // Messages have the type "list". The `add_messages`

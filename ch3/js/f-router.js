@@ -1,4 +1,4 @@
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 import { z } from 'zod';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 
@@ -12,7 +12,7 @@ const routeQuery = z
   })
   .describe('Route a user query to the most relevant datasource.');
 
-const llm = new ChatOpenAI({ model: 'gpt-3.5-turbo', temperature: 0 });
+const llm = new ChatAnthropic({ model: 'claude-haiku-4-5', temperature: 0 });
 // withStructuredOutput is a method that allows us to use the structured output of the model
 const structuredLlm = llm.withStructuredOutput(routeQuery, {
   name: 'RouteQuery',

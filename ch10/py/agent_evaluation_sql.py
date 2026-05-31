@@ -1,6 +1,6 @@
 from agent_sql_graph import builder
 from langchain import hub
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langsmith.evaluation import evaluate
 from langsmith.schemas import Example, Run
 from langchain_core.runnables import Runnable
@@ -9,7 +9,7 @@ import uuid
 _printed = set()
 thread_id = str(uuid.uuid4())
 experiment_prefix = "sql-agent-gpt4o"
-metadata = "chinook-gpt-4o-base-case-agent"
+metadata = "chinook-claude-sonnet-base-case-agent"
 config = {
     "configurable": {
         # Checkpoints are accessed by thread_id
@@ -41,7 +41,7 @@ def answer_evaluator(run, example) -> dict:
     prediction = run.outputs["response"]
 
     # LLM grader
-    llm = ChatOpenAI(model="gpt-4o", temperature=0)
+    llm = ChatAnthropic(model="claude-sonnet-4-6", temperature=0)
 
     # Structured prompt
     answer_grader = grade_prompt_answer_accuracy | llm

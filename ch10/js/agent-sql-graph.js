@@ -1,4 +1,4 @@
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 import { SqlDatabase } from 'langchain/sql_db';
 import { DataSource } from 'typeorm';
 import { SqlToolkit } from 'langchain/agents/toolkits/sql';
@@ -16,7 +16,7 @@ import {
 import Database from 'better-sqlite3';
 
 // LLM
-const llm = new ChatOpenAI({ model: 'gpt-4o', temperature: 0 });
+const llm = new ChatAnthropic({ model: 'claude-sonnet-4-6', temperature: 0 });
 
 // SQL toolkit
 const datasource = new DataSource({

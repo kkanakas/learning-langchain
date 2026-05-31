@@ -6,7 +6,8 @@ from langchain_core.documents import Document
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
 from langchain_core.vectorstores.in_memory import InMemoryVectorStore
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_anthropic import ChatAnthropic
+from langchain_huggingface import HuggingFaceEmbeddings
 
 from langgraph.graph import START, StateGraph
 from langgraph.graph.message import add_messages
@@ -22,8 +23,8 @@ def calculator(query: str) -> str:
 search = DuckDuckGoSearchRun()
 tools = [search, calculator]
 
-embeddings = OpenAIEmbeddings()
-model = ChatOpenAI(temperature=0.1)
+embeddings = HuggingFaceEmbeddings()
+model = ChatAnthropic(model="claude-haiku-4-5", temperature=0.1)
 
 tools_retriever = InMemoryVectorStore.from_documents(
     [Document(tool.description, metadata={"name": tool.name}) for tool in tools],

@@ -1,4 +1,4 @@
-import { ChatOpenAI } from "langchain-openai";
+import { ChatAnthropic } from '@langchain/anthropic';
 import {
   StateGraph,
   Annotation,
@@ -14,7 +14,7 @@ const SupervisorDecision = z.object({
 });
 
 // Initialize model
-const model = new ChatOpenAI({ model: "gpt-4", temperature: 0 });
+const model = new ChatAnthropic({ model: "claude-opus-4-8", temperature: 0 });
 const modelWithStructuredOutput =
   model.withStructuredOutput(SupervisorDecision);
 

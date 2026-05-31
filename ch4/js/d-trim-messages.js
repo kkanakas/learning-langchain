@@ -4,7 +4,7 @@ import {
   SystemMessage,
   trimMessages,
 } from "@langchain/core/messages";
-import { ChatOpenAI } from "@langchain/openai";
+import { ChatAnthropic } from '@langchain/anthropic';
 
 const messages = [
   new SystemMessage("you're a good assistant"),
@@ -23,7 +23,7 @@ const messages = [
 const trimmer = trimMessages({
   maxTokens: 65,
   strategy: "last",
-  tokenCounter: new ChatOpenAI({ modelName: "gpt-4o" }),
+  tokenCounter: new ChatAnthropic({ model: "claude-sonnet-4-6" }),
   includeSystem: true,
   allowPartial: false,
   startOn: "human",

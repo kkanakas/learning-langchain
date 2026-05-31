@@ -5,7 +5,7 @@ import {
   START,
   END,
 } from '@langchain/langgraph';
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 import { HumanMessage } from '@langchain/core/messages';
 
 const State = {
@@ -17,7 +17,7 @@ const State = {
 
 let builder = new StateGraph(State);
 
-const model = new ChatOpenAI();
+const model = new ChatAnthropic({ model: 'claude-haiku-4-5' });
 
 async function chatbot(state) {
   const answer = await model.invoke(state.messages);

@@ -1,12 +1,12 @@
 import * as uuid from 'uuid';
 import { MultiVectorRetriever } from 'langchain/retrievers/multi_vector';
-import { OpenAIEmbeddings } from '@langchain/openai';
+import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/huggingface_transformers";
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
 import { InMemoryStore } from '@langchain/core/stores';
 import { TextLoader } from 'langchain/document_loaders/fs/text';
 import { Document } from '@langchain/core/documents';
 import { PGVectorStore } from '@langchain/community/vectorstores/pgvector';
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 import { PromptTemplate } from '@langchain/core/prompts';
 import { RunnableSequence } from '@langchain/core/runnables';
 import { StringOutputParser } from '@langchain/core/output_parsers';
@@ -27,7 +27,7 @@ const prompt = PromptTemplate.fromTemplate(
   `Summarize the following document:\n\n{doc}`
 );
 
-const llm = new ChatOpenAI({ modelName: 'gpt-3.5-turbo' });
+const llm = new ChatAnthropic({ model: 'claude-haiku-4-5' });
 
 const chain = RunnableSequence.from([
   { doc: (doc) => doc.pageContent },
@@ -60,7 +60,7 @@ const byteStore = new InMemoryStore();
 // vector store for the summaries
 const vectorStore = await PGVectorStore.fromDocuments(
   docs,
-  new OpenAIEmbeddings(),
+  new HuggingFaceTransformersEmbeddings({ model: "Xenova/all-MiniLM-L6-v2" }),
   {
     postgresConnectionOptions: {
       connectionString,

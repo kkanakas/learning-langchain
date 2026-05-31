@@ -1,6 +1,6 @@
 from typing import Optional
 
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langsmith import Client, evaluate, aevaluate
 from langsmith.evaluation import EvaluationResults
 from pydantic import BaseModel, Field
@@ -11,7 +11,7 @@ client = Client()
 
 DEFAULT_DATASET_NAME = "langchain-blogs-qa"
 
-llm = ChatOpenAI(model="gpt-4o", temperature=0)
+llm = ChatAnthropic(model="claude-sonnet-4-6", temperature=0)
 
 EVALUATION_PROMPT = f"""You are a teacher grading a quiz.
 

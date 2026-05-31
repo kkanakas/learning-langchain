@@ -3,7 +3,7 @@ import {
   SystemMessage,
   HumanMessage,
 } from '@langchain/core/messages';
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 import {
   StateGraph,
   Annotation,
@@ -12,7 +12,7 @@ import {
   END,
 } from '@langchain/langgraph';
 
-const model = new ChatOpenAI();
+const model = new ChatAnthropic({ model: 'claude-haiku-4-5' });
 
 const annotation = Annotation.Root({
   messages: Annotation({ reducer: messagesStateReducer, default: () => [] }),

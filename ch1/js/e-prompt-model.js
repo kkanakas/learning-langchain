@@ -1,8 +1,8 @@
 import { PromptTemplate } from '@langchain/core/prompts';
-import { OpenAI } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
 
-const model = new OpenAI({
-  model: 'gpt-3.5-turbo',
+const model = new ChatAnthropic({
+  model: 'claude-haiku-4-5',
 });
 const template =
   PromptTemplate.fromTemplate(`Answer the question based on the context below. If the question cannot be answered using the information provided, answer with "I don't know".

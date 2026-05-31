@@ -1,5 +1,5 @@
 import { VectorStoreRetriever } from '@langchain/core/vectorstores';
-import { OpenAIEmbeddings } from '@langchain/openai';
+import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/huggingface_transformers";
 import { SupabaseVectorStore } from '@langchain/community/vectorstores/supabase';
 import { createClient } from '@supabase/supabase-js';
 import { RunnableConfig } from '@langchain/core/runnables';
@@ -48,9 +48,7 @@ export async function makeRetriever(
   config: RunnableConfig
 ): Promise<VectorStoreRetriever> {
   const configuration = ensureBaseConfiguration(config);
-  const embeddingModel = new OpenAIEmbeddings({
-    model: configuration.embeddingModel,
-  });
+  const embeddingModel = new HuggingFaceTransformersEmbeddings({ model: "Xenova/all-MiniLM-L6-v2" });
   switch (configuration.retrieverProvider) {
     case 'supabase':
       return makeSupabaseRetriever(configuration, embeddingModel);

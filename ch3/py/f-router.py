@@ -2,7 +2,7 @@
 from typing import Literal
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langchain_core.runnables import RunnableLambda
 
 
@@ -17,7 +17,7 @@ class RouteQuery(BaseModel):
 
 # Prompt template
 # LLM with function call
-llm = ChatOpenAI(model="gpt-4o", temperature=0)
+llm = ChatAnthropic(model="claude-sonnet-4-6", temperature=0)
 
 """
 with_structured_output: Model wrapper that returns outputs formatted to match the given schema.

@@ -1,7 +1,7 @@
 import { DuckDuckGoSearch } from '@langchain/community/tools/duckduckgo_search';
 import { Calculator } from '@langchain/community/tools/calculator';
-import { ChatOpenAI } from '@langchain/openai';
-import { OpenAIEmbeddings } from '@langchain/openai';
+import { ChatAnthropic } from '@langchain/anthropic';
+import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/huggingface_transformers";
 import { Document } from '@langchain/core/documents';
 import { MemoryVectorStore } from 'langchain/vectorstores/memory';
 import {
@@ -17,8 +17,8 @@ const search = new DuckDuckGoSearch();
 const calculator = new Calculator();
 const tools = [search, calculator];
 
-const embeddings = new OpenAIEmbeddings();
-const model = new ChatOpenAI({ temperature: 0.1 });
+const embeddings = new HuggingFaceTransformersEmbeddings({ model: "Xenova/all-MiniLM-L6-v2" });
+const model = new ChatAnthropic({ model: 'claude-haiku-4-5', temperature: 0.1 });
 
 // Create vector store and retriever
 const toolsStore = await MemoryVectorStore.fromDocuments(

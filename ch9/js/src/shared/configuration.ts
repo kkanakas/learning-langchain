@@ -8,7 +8,7 @@ import { RunnableConfig } from '@langchain/core/runnables';
 /**
  * typeof ConfigurationAnnotation.State class for indexing and retrieval operations.
  *
- * @property embeddingModel - The name of the openai embedding model to use.
+ * @property embeddingModel - The name of the HuggingFace embedding model to use.
  * @property retrieverProvider - The vector store provider to use for retrieval.
  * @property filter - Optional filter criteria to limit the items retrieved based on the specified filter type.
  * @property k - The number of results to return from the retriever.
@@ -16,9 +16,9 @@ import { RunnableConfig } from '@langchain/core/runnables';
 
 export const BaseConfigurationAnnotation = Annotation.Root({
   /**
-   * Name of the openai embedding model to use. Must be a valid embedding model name.
+   * Name of the HuggingFace embedding model to use. Must be a valid embedding model name.
    */
-  embeddingModel: Annotation<'text-embedding-3-small'>,
+  embeddingModel: Annotation<'all-MiniLM-L6-v2'>,
 
   /**
    * The vector store provider to use for retrieval.
@@ -51,7 +51,7 @@ export function ensureBaseConfiguration(
     typeof BaseConfigurationAnnotation.State
   >;
   return {
-    embeddingModel: configurable.embeddingModel || 'text-embedding-3-small',
+    embeddingModel: configurable.embeddingModel || 'all-MiniLM-L6-v2',
     retrieverProvider: configurable.retrieverProvider || 'supabase',
     filter: configurable.filter,
     k: configurable.k || 4,
