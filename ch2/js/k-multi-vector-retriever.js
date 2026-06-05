@@ -5,7 +5,7 @@ import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
 import { InMemoryStore } from '@langchain/core/stores';
 import { TextLoader } from 'langchain/document_loaders/fs/text';
 import { Document } from '@langchain/core/documents';
-import { PGVectorStore } from '@langchain/community/vectorstores/pgvector';
+import { PGVectorStore } from '@langchain/pgvector';
 import { ChatAnthropic } from '@langchain/anthropic';
 import { PromptTemplate } from '@langchain/core/prompts';
 import { RunnableSequence } from '@langchain/core/runnables';

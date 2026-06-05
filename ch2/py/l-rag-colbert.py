@@ -1,18 +1,21 @@
 """
-- Windows is not supported. RAGatouille doesn't appear to work outside WSL and has issues with WSL1. Some users have had success running RAGatouille in WSL2.
-- Only on python.
-- Read full docs here: https://github.com/AnswerDotAI/RAGatouille/blob/8183aad64a9a6ba805d4066dcab489d97615d316/README.md
+PyLate implementation of ColBERT RAG.
+- Supports macOS, Linux, and Windows (unlike RAGatouille).
 
 - To install run:
 
 ```bash
-pip install -U ragatouille transformers
+pip install pylate
 ```
 """
-from ragatouille import RAGPretrainedModel
-import requests
+from typing import Any, List
 
-RAG = RAGPretrainedModel.from_pretrained("colbert-ir/colbertv2.0")
+import requests
+from langchain_core.documents import Document
+from langchain_core.retrievers import BaseRetriever
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from pydantic import ConfigDict
+from pylate import indexes, models, retrieve
 
 
 def get_wikipedia_page(title: str):
@@ -21,9 +24,7 @@ def get_wikipedia_page(title: str):
     :param title: str - Title of the Wikipedia page.
     :return: str - Full text content of the page as raw string.
     """
-    # Wikipedia API endpoint
     URL = "https://en.wikipedia.org/w/api.php"
-    # Parameters for the API request
     params = {
         "action": "query",
         "format": "json",
@@ -31,28 +32,85 @@ def get_wikipedia_page(title: str):
         "prop": "extracts",
         "explaintext": True,
     }
-    # Custom User-Agent header to comply with Wikipedia's best practices
-    headers = {"User-Agent": "RAGatouille_tutorial/0.0.1"}
+    headers = {"User-Agent": "PyLate_tutorial/0.0.1"}
     response = requests.get(URL, params=params, headers=headers)
     data = response.json()
-    # Extracting page content
     page = next(iter(data["query"]["pages"].values()))
     return page["extract"] if "extract" in page else None
 
 
 full_document = get_wikipedia_page("Hayao_Miyazaki")
-# Create an index
-RAG.index(
-    collection=[full_document],
-    index_name="Miyazaki-123",
-    max_document_length=180,
-    split_documents=True,
-)
-# query
-results = RAG.search(query="What animation studio did Miyazaki found?", k=3)
 
+# Split into passages — RAGatouille used max_document_length=180 tokens (~720 chars)
+splitter = RecursiveCharacterTextSplitter(chunk_size=720, chunk_overlap=0)
+passages = splitter.split_text(full_document)
+
+# Load ColBERT model
+model = models.ColBERT(model_name_or_path="colbert-ir/colbertv2.0")
+
+# Encode documents
+documents_embeddings = model.encode(
+    passages,
+    batch_size=32,
+    is_query=False,
+    show_progress_bar=True,
+)
+
+# Create PLAID index and add documents
+index = indexes.PLAID(
+    index_folder="./pylate-index",
+    index_name="Miyazaki-123",
+    model=model,
+    override=True,
+)
+index.add_documents(
+    documents_ids=list(range(len(passages))),
+    documents_embeddings=documents_embeddings,
+)
+
+# Direct retrieval
+retriever_engine = retrieve.ColBERT(index=index)
+query = "What animation studio did Miyazaki found?"
+query_embeddings = model.encode(
+    [query],
+    batch_size=1,
+    is_query=True,
+    show_progress_bar=True,
+)
+results = retriever_engine.retrieve(queries_embeddings=query_embeddings, k=3)
 print(results)
 
-# Alternative: Utilize langchain retriever
-retriever = RAG.as_langchain_retriever(k=3)
-retriever.invoke("What animation studio did Miyazaki found?")
+
+# LangChain retriever wrapper
+class PyLateRetriever(BaseRetriever):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
+    colbert_model: Any
+    colbert_retriever: Any
+    passages: List[str]
+    k: int = 3
+
+    def _get_relevant_documents(self, query: str) -> List[Document]:
+        query_embeddings = self.colbert_model.encode(
+            [query], batch_size=1, is_query=True, show_progress_bar=False
+        )
+        results = self.colbert_retriever.retrieve(
+            queries_embeddings=query_embeddings, k=self.k
+        )
+        return [
+            Document(
+                page_content=self.passages[r["id"]],
+                metadata={"score": r["score"]},
+            )
+            for r in results[0]
+        ]
+
+
+langchain_retriever = PyLateRetriever(
+    colbert_model=model,
+    colbert_retriever=retriever_engine,
+    passages=passages,
+    k=3,
+)
+docs = langchain_retriever.invoke("What animation studio did Miyazaki found?")
+print(docs)

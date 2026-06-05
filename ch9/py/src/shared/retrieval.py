@@ -3,7 +3,7 @@ import os
 from langchain_chroma import Chroma
 from langchain_core.embeddings import Embeddings
 from langchain_core.runnables import RunnableConfig
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings  # type: ignore[import-not-found]
 from langchain_community.vectorstores import SupabaseVectorStore
 from langchain_chroma import Chroma
 from supabase import create_client
@@ -17,7 +17,7 @@ def make_text_encoder(model: str) -> Embeddings:
     """Connect to the configured text encoder."""
     provider, model = model.split("/", maxsplit=1)
     if provider == "huggingface":
-        from langchain_huggingface import HuggingFaceEmbeddings
+        from langchain_huggingface import HuggingFaceEmbeddings  # type: ignore[import-not-found]
         return HuggingFaceEmbeddings(model_name=model)
     else:
         raise ValueError(f"Unsupported embedding provider: {provider}")

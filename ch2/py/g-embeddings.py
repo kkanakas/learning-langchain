@@ -1,4 +1,4 @@
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings  # type: ignore[import-not-found]
 
 model = HuggingFaceEmbeddings()
 embeddings = model.embed_documents([

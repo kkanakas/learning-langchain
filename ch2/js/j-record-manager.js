@@ -15,7 +15,7 @@ docker run \
 import { PostgresRecordManager } from '@langchain/community/indexes/postgres';
 import { index } from 'langchain/indexes';
 import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/huggingface_transformers";
-import { PGVectorStore } from '@langchain/community/vectorstores/pgvector';
+import { PGVectorStore } from '@langchain/pgvector';
 import { v4 as uuidv4 } from 'uuid';
 
 const tableName = 'test_langchain';

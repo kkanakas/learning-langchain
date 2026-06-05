@@ -15,7 +15,7 @@ docker run \
 import { TextLoader } from 'langchain/document_loaders/fs/text';
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
 import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/huggingface_transformers";
-import { PGVectorStore } from '@langchain/community/vectorstores/pgvector';
+import { PGVectorStore } from '@langchain/pgvector';
 import { v4 as uuidv4 } from 'uuid';
 
 const connectionString =

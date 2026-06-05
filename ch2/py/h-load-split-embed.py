@@ -1,9 +1,9 @@
-from langchain_community.document_loaders import TextLoader
+from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings  # type: ignore[import-not-found]
 
 # Load the document
-loader = TextLoader("./test.txt", encoding="utf-8")
+loader = PyPDFLoader('./test.pdf')
 doc = loader.load()
 
 # Split the document

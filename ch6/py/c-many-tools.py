@@ -7,7 +7,7 @@ from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
 from langchain_core.vectorstores.in_memory import InMemoryVectorStore
 from langchain_anthropic import ChatAnthropic
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings  # type: ignore[import-not-found]
 
 from langgraph.graph import START, StateGraph
 from langgraph.graph.message import add_messages

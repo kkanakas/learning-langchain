@@ -1,6 +1,6 @@
-from langchain_community.document_loaders import TextLoader
+from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings  # type: ignore[import-not-found]
 from langchain_postgres.vectorstores import PGVector
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
@@ -8,32 +8,38 @@ from pydantic import BaseModel
 from langchain_core.runnables import RunnablePassthrough
 from langchain_anthropic import ChatAnthropic
 from langchain_core.documents import Document
-from langchain.retrievers.multi_vector import MultiVectorRetriever
-from langchain.storage import InMemoryStore
+from langchain_classic.retrievers.multi_vector import MultiVectorRetriever
+from langchain_core.stores import InMemoryStore
+from anthropic import RateLimitError as AnthropicRateLimitError
 import uuid
 
 connection = "postgresql+psycopg://langchain:langchain@localhost:6024/langchain"
 collection_name = "summaries"
 embeddings_model = HuggingFaceEmbeddings()
 # Load the document
-loader = TextLoader("./test.txt", encoding="utf-8")
+loader = loader = PyPDFLoader('./test.pdf')
 docs = loader.load()
 
 print("length of loaded docs: ", len(docs[0].page_content))
 # Split the document
-splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=200)
 chunks = splitter.split_documents(docs)
 
 # The rest of your code remains the same, starting from:
 prompt_text = "Summarize the following document:\n\n{doc}"
 
 prompt = ChatPromptTemplate.from_template(prompt_text)
-llm = ChatAnthropic(temperature=0, model="claude-haiku-4-5")
+llm = ChatAnthropic(temperature=0, model="claude-haiku-4-5").with_retry(
+    retry_if_exception_type=(AnthropicRateLimitError,),
+    wait_exponential_jitter=True,
+    stop_after_attempt=5,
+)
 summarize_chain = {
     "doc": lambda x: x.page_content} | prompt | llm | StrOutputParser()
 
-# batch the chain across the chunks
-summaries = summarize_chain.batch(chunks, {"max_concurrency": 5})
+# batch the chain across the chunks — concurrency=1 avoids hitting the 50 req/min limit
+summaries = summarize_chain.batch(chunks, {"max_concurrency": 5
+                                           })
 
 # The vectorstore to use to index the child chunks
 vectorstore = PGVector(

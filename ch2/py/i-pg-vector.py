@@ -14,8 +14,8 @@ docker run \
 
 """
 
-from langchain_community.document_loaders import TextLoader
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_huggingface import HuggingFaceEmbeddings  # type: ignore[import-not-found]
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_postgres.vectorstores import PGVector
 from langchain_core.documents import Document
@@ -26,7 +26,7 @@ import uuid
 connection = "postgresql+psycopg://langchain:langchain@localhost:6024/langchain"
 
 # Load the document, split it into chunks
-raw_documents = TextLoader('./test.txt', encoding="utf-8").load()
+raw_documents = PyPDFLoader('./test.pdf').load()
 text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=1000, chunk_overlap=200)
 documents = text_splitter.split_documents(raw_documents)

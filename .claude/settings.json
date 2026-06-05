@@ -1,7 +1,24 @@
 {
   "permissions": {
     "allow": [
-      "Bash(xargs ls -la)"
+      "Bash(xargs ls -la)",
+      "Bash(npm pack *)",
+      "Bash(curl -s \"https://registry.npmjs.org/@langchain/pgvector/0.1.0\")",
+      "Bash(python3 -c ' *)",
+      "Bash(/Users/stynger76/Documents/GitHub/learning-langchain/.venv/bin/pip install *)",
+      "Bash(/Users/stynger76/Documents/GitHub/learning-langchain/.venv/bin/python -c \"from langchain_community.indexes import SQLRecordManager; print\\('community SQLRecordManager OK'\\)\")",
+      "Bash(/Users/stynger76/Documents/GitHub/learning-langchain/.venv/bin/python -c \"from langchain.indexes import index; print\\('langchain index OK'\\)\")",
+      "Bash(/Users/stynger76/Documents/GitHub/learning-langchain/.venv/bin/python -c \"from langchain_community.indexes import SQLRecordManager, index; print\\('both from community OK'\\)\")",
+      "Bash(/Users/stynger76/Documents/GitHub/learning-langchain/.venv/bin/python -c ' *)",
+      "Bash(/Users/stynger76/Documents/GitHub/learning-langchain/.venv/bin/python -c \"from langchain_postgres import SQLRecordManager, index; print\\('postgres OK'\\)\")",
+      "Bash(/Users/stynger76/Documents/GitHub/learning-langchain/.venv/bin/python -c \"from langchain.retrievers import MultiVectorRetriever; print\\('OK'\\)\")",
+      "Bash(/Users/stynger76/Documents/GitHub/learning-langchain/.venv/bin/python -c \"from langchain_community.retrievers import MultiVectorRetriever; print\\('community OK'\\)\")",
+      "Bash(/Users/stynger76/Documents/GitHub/learning-langchain/.venv/bin/python -c \"from langchain_core.retrievers import MultiVectorRetriever; print\\('core OK'\\)\")",
+      "Bash(/Users/stynger76/Documents/GitHub/learning-langchain/.venv/bin/python -c \"from langchain.storage import InMemoryStore; print\\('storage OK'\\)\")",
+      "Bash(/Users/stynger76/Documents/GitHub/learning-langchain/.venv/bin/python -c \"from langchain_core.documents import BaseDocumentCompressor; print\\('OK'\\)\")",
+      "Bash(/Users/stynger76/Documents/GitHub/learning-langchain/.venv/bin/python -c \"from langchain_core.retrievers.document_compressors import BaseDocumentCompressor; print\\('OK'\\)\")",
+      "Bash(/Users/stynger76/Documents/GitHub/learning-langchain/.venv/bin/python -c \"from ragatouille import RAGPretrainedModel; print\\('import OK'\\)\")",
+      "Bash(/Users/stynger76/Documents/GitHub/learning-langchain/.venv/bin/python --version)"
     ]
   }
 }

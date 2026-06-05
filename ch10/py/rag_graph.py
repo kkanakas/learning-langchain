@@ -2,9 +2,9 @@ from typing import List, TypedDict
 from langchain_community.document_loaders import WebBaseLoader
 from langchain.schema import Document
 from langgraph.graph import END, StateGraph, START
-from langchain_community.vectorstores import InMemoryVectorStore
+from langchain_core.vectorstores import InMemoryVectorStore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings  # type: ignore[import-not-found]
 from langchain import hub
 from langchain_anthropic import ChatAnthropic
 

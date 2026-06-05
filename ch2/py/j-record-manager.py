@@ -1,7 +1,8 @@
-from langchain.indexes import SQLRecordManager, index
+from langchain_community.indexes._sql_record_manager import SQLRecordManager  # type: ignore[import-not-found]
+from langchain_core.indexing import index
 from langchain_postgres.vectorstores import PGVector
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain.docstore.document import Document
+from langchain_huggingface import HuggingFaceEmbeddings  # type: ignore[import-not-found]
+from langchain_core.documents import Document
 
 connection = "postgresql+psycopg://langchain:langchain@localhost:6024/langchain"
 collection_name = "my_docs"
